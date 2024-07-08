@@ -1,12 +1,22 @@
-def fibonacci(n):
-    if n <= 1:
-        return n
-    else:
-        fib_prev, fib_current = 0, 1
-        for i in range(2, n+1):
-            fib_next = fib_prev + fib_current
-            fib_prev, fib_current = fib_current, fib_next
-        return fib_current
+class FibonacciIterator:
+    def __init__(self, limit):
+        self.limit = limit
+        self.a, self.b = 0, 1
+        self.count = 0
 
-print(fibonacci(5))
-# bu queryda nechi sonni yozsangiz ushani fibonacci boyicha chqarb beradi
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.count >= self.limit:
+            raise StopIteration
+        self.a, self.b = self.b, self.a + self.b
+        self.count += 1
+        return self.a
+
+limit = 10  
+fibonacci_sequence = FibonacciIterator(limit)
+
+print(f"Первые {limit} чисел Фибоначчи:")
+for number in fibonacci_sequence:
+    print(number)
